@@ -1,8 +1,11 @@
+import { useNavigation } from "@react-navigation/native";
 import React from "react";
 import { View, Text, StyleSheet, Image, ImageBackground } from "react-native";
 import Button from "../components/Buttons"
 
-export const Homepage = ({ navigation }) => {
+export const Homepage = () => {
+    const navigation = useNavigation();
+
     return (
         <View style={styles.container}>
             
@@ -27,7 +30,6 @@ export const Homepage = ({ navigation }) => {
                     <Text style={styles.footerText}>By Lina Abu Hijleh - 2022</Text>
                 </ImageBackground>
             </View>
-            
             
         </View>
     )

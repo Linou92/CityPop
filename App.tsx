@@ -1,3 +1,4 @@
+import 'react-native-gesture-handler';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import React from 'react';
@@ -16,11 +17,12 @@ const MyStack = () => {
   return (
     <NavigationContainer>
       <Stack.Navigator
-        screenOptions={{
-          headerShown: false,
-          gestureEnabled: true,
-          gestureDirection: "horizontal",
-        }}>
+          screenOptions={{
+            headerShown: false,
+            gestureEnabled: true,
+            gestureDirection: "horizontal",
+          }}
+        >
         <Stack.Screen name="Homepage" component={Homepage}></Stack.Screen>
         <Stack.Screen name="SearchByCity" component={SearchByCity}></Stack.Screen>
         <Stack.Screen name="SearchByCountry" component={SearchByCountry}></Stack.Screen>
@@ -31,7 +33,8 @@ const MyStack = () => {
   )
 }
 
-export default function App(){
+
+const App = () => {
   return(
     <MyStack></MyStack>
   )
@@ -47,3 +50,4 @@ const styles = StyleSheet.create({
 });
 
 
+export default App;
