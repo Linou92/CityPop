@@ -14,7 +14,10 @@ CityPop is a mobile application where the user can search for how many inhabitan
     - Visual Studio Code version 1.67.2
 
 ## How to run the program:
-
+Project is created with:
+* Lorem version: 12.3
+* Ipsum version: 2.33
+* Ament library version: 999
     - Download the project
     - Download ExpoGo on your mobile device
     - Make sure to have the latest versions of node and npm by running node -v and npm -v
