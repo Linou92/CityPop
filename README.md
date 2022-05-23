@@ -4,7 +4,7 @@ CityPop is a mobile application where the user can search for how many inhabitan
 
 ## Usage Example
 
-![Homepage](url "CityPop/Screenshots/homepage.jpg")
+![Homepage]("CityPop/Screenshots/homepage.jpg")
 ![Search By City](url "Title")
 ![Search By Country](url "Title")
 ![Top Cities](url "Title")
