@@ -23,7 +23,7 @@ export const PopulationResult = () => {
 
             <View style={styles.content}>
                 <View style={styles.resultContainer}>
-                    <Text style={styles.titleText}> The population of {data.name} is </Text>
+                    <Text style={styles.titleText}> The population of {"\n"} {data.name} is </Text>
                     <View style={styles.populationContainer}>
                         <Text style={styles.population}> {data.population} </Text>
                     </View>
@@ -103,7 +103,8 @@ const styles = StyleSheet.create({
         height: 50,
         width: 250,
         borderRadius: 20,
-        textAlign: 'center'
+        textAlign: 'center',
+        marginTop: 30
     },
 
     population: {

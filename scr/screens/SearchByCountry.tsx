@@ -1,11 +1,28 @@
 import { useNavigation } from "@react-navigation/native";
-import React from "react";
+import React, { useState } from "react";
 import { View, Text, StyleSheet, ImageBackground, TouchableOpacity, TextInput } from "react-native";
 import Icon from 'react-native-vector-icons/AntDesign';
 
-// Design of the page
+
 export const SearchByCountry = () => {
+
+    // logic and API call
     const navigation = useNavigation();
+
+    const [error, setError] = useState({}) // setting error message
+    const [value, onChangeText] = useState('') // setting the input value
+
+
+    function fetchAPI (arg: string) {
+        fetch('http://api.geonames.org/searchJSON?country=%27%20'+ arg +'%20%27&featureClass=P&orderby=population&maxRows=3&username=weknowit')
+        .then(response => response.json())
+        .then(res => {
+            navigation.navigate("TopCities", {data: res.geonames})
+        })
+        .catch(err => setError(err))
+    }
+
+    // design of the page
     return (
         <View style={styles.container}>
             
@@ -26,12 +43,12 @@ export const SearchByCountry = () => {
                         clearTextOnFocus = {true}
                         clearButtonMode = {"while-editing"}
                         style = {styles.input}
-                        //onChangeText = {text => onChangeText(text)}
-                        //value = {value}
+                        onChangeText = {text => onChangeText(text)}
+                        value = {value}
                         ></TextInput>
                     </View>
                         <View style={styles.searchIcon}>
-                            <Icon  name="search1" size={50} color={"#50aab5"} /*onPress={() => searchFunction(value)}*/></Icon>
+                            <Icon  name="search1" size={50} color={"#50aab5"} onPress={() => fetchAPI(value)}></Icon>
                         </View>
                     
                 </View>

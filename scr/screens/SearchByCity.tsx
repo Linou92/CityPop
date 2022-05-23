@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { View, Text, StyleSheet, Image, ImageBackground } from "react-native";
 import Icon from 'react-native-vector-icons/AntDesign';
 import { TextInput, TouchableOpacity } from "react-native-gesture-handler";
-import { NavigationContainer, useNavigation } from "@react-navigation/native";
+import { useNavigation } from "@react-navigation/native";
 
 
 export const SearchByCity = () => {
@@ -17,6 +17,7 @@ export const SearchByCity = () => {
         fetch('http://api.geonames.org/searchJSON?name=' + arg + '&featureClass=P&maxRows=1&username=weknowit')
         .then(response => response.json())
         .then(res => {
+            console.log(res)
             navigation.navigate("PopulationResult", {data: res.geonames[0]})
         })
         .catch(err => setError(err))
