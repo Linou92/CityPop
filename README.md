@@ -11,18 +11,22 @@ CityPop is a mobile application where the user can search for how many inhabitan
 
 ## Used technologies
 
-- ExpoGo version 2.24.4
-- Expo CLI version 5.4.4
-- ESLint version 8.16.0
-- Jest version 26.6.3
-- Expo version 45.0.0
-- React version 17.0.2
-- React Native version 0.68.2
-- Typescript version 4.3.5
-- npm version 8.10.0
-- NodeJs version 16.14.0
-- Visual Studio Code version 1.67.2
-- Used API : Geonames (http://www.geonames.org/export/geonames-search.html)
+- For running the app:
+   - ExpoGo version 2.24.4
+   - Expo CLI version 5.4.4
+   - Expo version 45.0.0
+- For testing: 
+   - ESLint version 8.16.0
+   - Jest version 26.6.3
+   - Flow version 0.178.1
+- For creating the app: 
+   - React version 17.0.2
+   - React Native version 0.68.2
+   - Typescript version 4.3.5
+   - npm version 8.10.0
+   - NodeJs version 16.14.0
+   - Visual Studio Code version 1.67.2
+   - Used API : Geonames (http://www.geonames.org/export/geonames-search.html)
 
 ## How to run the program
 
