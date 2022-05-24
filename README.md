@@ -12,6 +12,9 @@ CityPop is a mobile application where the user can search for how many inhabitan
 ## Used technologies
 
 - ExpoGo version 2.24.4
+- Expo CLI version 5.4.4
+- ESLint version 8.16.0
+- Jest version 26.6.3
 - Expo version 45.0.0
 - React version 17.0.2
 - React Native version 0.68.2
