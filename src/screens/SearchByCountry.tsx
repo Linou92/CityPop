@@ -1,3 +1,5 @@
+// @flow
+
 import { useNavigation } from "@react-navigation/native"
 import React, { useState } from "react"
 import { View, Text, StyleSheet, ImageBackground, TouchableOpacity, TextInput } from "react-native"
