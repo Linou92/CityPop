@@ -25,7 +25,7 @@ CityPop is a mobile application where the user can search for how many inhabitan
 
 - Download the project
 - Download ExpoGo on your mobile device
-- Make sure to have the latest versions of node and npm by running node -v and npm -v
+- Make sure to have the latest versions of node and npm by running node -v and npm -v otherwise download them
 - Go to the terminal on your computer then to your downloaded project and run npm install
 - Run npm start
 - Open ExpoGo and scan the QR code or go to the given link
