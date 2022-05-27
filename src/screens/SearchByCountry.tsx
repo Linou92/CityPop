@@ -64,7 +64,6 @@ export const SearchByCountry = () => {
 			// Handle illegal cases and limited search to letters only            
 			if (res.totalResultsCount > 0 && arg != ''  && arg.match(/^([a-zA-Z\u0080-\u024F]+(?:. |-| |'))*[a-zA-Z\u0080-\u024F]*$/)) {
                 fetchAPI(res.geonames[0].countryCode)
-				console.log(res.geonames[0].countryCode)
             } 
 			else if(arg == ''){
 				setIsLoading(false)
