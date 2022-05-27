@@ -38,16 +38,15 @@ export const SearchByCountry = () => {
 					setErrorMsg('Please enter a country !')
 				}
 				else{
-				setIsLoading(false)
-						setErrorMsg('Only letters allowed !')
-					}
-				})
-				.catch(err => {
 					setIsLoading(false)
-					setFetchError(err)
-				})
-				.finally(() => setIsLoading(false))
-		}, 2000)
+					setErrorMsg('Only letters allowed !')
+				}
+			})
+			.catch(err => {
+				setIsLoading(false)
+				setFetchError(err)
+			})
+			.finally(() => setIsLoading(false))
 	}
 
 	// render error message

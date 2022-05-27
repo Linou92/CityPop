@@ -39,6 +39,10 @@ export const SearchByCity = () => {
 					setIsLoading(false)
 					setErrorMsg('Please enter a city !')
 				}
+				else if(arg != res.geonames[0]){
+					setIsLoading(false)
+					setErrorMsg('Please enter a valid city !')
+				}
 				else{
 					setIsLoading(false)
 					setErrorMsg('Only letters allowed !')
