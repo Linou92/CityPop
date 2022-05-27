@@ -41,5 +41,9 @@ CityPop is a mobile application where the user can search for how many inhabitan
 - Open ExpoGo and scan the QR code or go to the given link
 - Enjoy !
 
+## Video Demo
+
+https://user-images.githubusercontent.com/23634325/170703649-2e5db2ea-b688-478d-9d71-4fc552dc3a05.mp4
+
 ## Project done by Lina Abu Hijleh
  
