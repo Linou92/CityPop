@@ -1,7 +1,7 @@
 // @flow
 
 import React, { useState } from "react"
-import { View, Text, StyleSheet, ImageBackground } from "react-native"
+import { View, Text, StyleSheet, ImageBackground, ActivityIndicator } from "react-native"
 import Icon from "react-native-vector-icons/AntDesign"
 import { TextInput, TouchableOpacity } from "react-native-gesture-handler"
 import { useNavigation } from "@react-navigation/native"
@@ -26,11 +26,12 @@ export const SearchByCity = () => {
 	function fetchAPI (arg: string) {
 		setTimeout(() => abortController.abort(), 2000)
 		setIsLoading(true)
-		fetch("http://api.geonames.org/searchJSON?name=" + arg + "&featureClass=P&maxRows=1&username=weknowit")
+		fetch("http://api.geonames.org/searchJSON?name=" + arg + "&featureClass=P&maxRows=1&username=weknowit", {signal: signal })
 			.then(response => response.json())
 			.then(res => {
 				setIsLoading(false)
 				setFetchError(null)
+
 				// Handle illegal cases and limited search to letters only
 				if(res.totalResultsCount > 0 && arg != '' && arg.match(/^([a-zA-Z\u0080-\u024F]+(?:. |-| |'))*[a-zA-Z\u0080-\u024F]*$/)){
 					navigation.navigate("PopulationResult", {data: res.geonames[0]})
@@ -39,20 +40,25 @@ export const SearchByCity = () => {
 					setIsLoading(false)
 					setErrorMsg('Please enter a city !')
 				}
-				else if(arg != res.geonames[0]){
-					setIsLoading(false)
-					setErrorMsg('Please enter a valid city !')
-				}
-				else{
+				else if(!(arg.match(/^([a-zA-Z\u0080-\u024F]+(?:. |-| |'))*[a-zA-Z\u0080-\u024F]*$/))) {
 					setIsLoading(false)
 					setErrorMsg('Only letters allowed !')
 				}
+				else {
+					setIsLoading(false)
+					setErrorMsg('Error fetching the API !')
+	    		}
 			})
 			.catch(err => {
 				setIsLoading(false)
 				setFetchError(err)
 			})
 			.finally(() => setIsLoading(false))
+	}
+
+	// handles press button to allow it to call fetchAPI
+	const pressButton = async (arg: string) => {
+		await fetchAPI(arg)
 	}
 
 	// render error messages
@@ -86,10 +92,10 @@ export const SearchByCity = () => {
 		if(isLoading){
 			return(
 				<View>
-					<Text style={styles.loadingText}>
-						{'Loading...'}
-					</Text>
+					<ActivityIndicator size='large' color='green' ></ActivityIndicator>
+					<Text style={styles.loadingText}>{'Loading...'}</Text>
 				</View>
+				
 			)
 		}
 	}
@@ -124,7 +130,7 @@ export const SearchByCity = () => {
 					{renderError()}
 
 					<View style={styles.searchIcon}>
-						<Icon  name="search1" size={50} color={"#50aab5"} onPress={() => fetchAPI(value)}></Icon>
+						<Icon  name="search1" size={50} color={"#50aab5"} onPress={() => pressButton(value)}></Icon>
 					</View>
 
 					{renderLoading()}

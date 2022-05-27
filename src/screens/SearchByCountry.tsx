@@ -2,7 +2,7 @@
 
 import { useNavigation } from "@react-navigation/native"
 import React, { useState } from "react"
-import { View, Text, StyleSheet, ImageBackground, TouchableOpacity, TextInput } from "react-native"
+import { View, Text, StyleSheet, ImageBackground, TouchableOpacity, TextInput, ActivityIndicator } from "react-native"
 import Icon from "react-native-vector-icons/AntDesign"
 
 
@@ -18,13 +18,13 @@ export const SearchByCountry = () => {
 
 	// cancel fetch request calls and cleanup
 	const abortController = new AbortController()
-	const signal = abortController.signal 
+	const signal = abortController.signal
 
 	// fetch the API with user input
 	function fetchAPI (arg: string) {
 		setTimeout(() => abortController.abort(), 2000)
 		setIsLoading(true)
-		fetch("http://api.geonames.org/searchJSON?country=%27%20"+ arg +"%20%27&featureClass=P&orderby=population&maxRows=3&username=weknowit")
+		fetch("http://api.geonames.org/searchJSON?country=%27%20"+ arg +"%20%27&featureClass=P&orderby=population&maxRows=3&username=weknowit", {signal: signal })
 			.then(response => response.json())
 			.then(res => {
 				setIsLoading(false)
@@ -37,10 +37,14 @@ export const SearchByCountry = () => {
 					setIsLoading(false)
 					setErrorMsg('Please enter a country !')
 				}
-				else{
+				else if(!(arg.match(/^([a-zA-Z\u0080-\u024F]+(?:. |-| |'))*[a-zA-Z\u0080-\u024F]*$/))) {
 					setIsLoading(false)
 					setErrorMsg('Only letters allowed !')
 				}
+				else {
+					setIsLoading(false)
+					setErrorMsg('Error fetching the API !')
+	    		}
 			})
 			.catch(err => {
 				setIsLoading(false)
@@ -49,6 +53,42 @@ export const SearchByCountry = () => {
 			.finally(() => setIsLoading(false))
 	}
 
+
+	// fetches the user input's country code result first and use it to fetch it to the main API
+	function fetchByCountryCode(arg: string) {
+        setTimeout(() => abortController.abort(), 2000);
+        fetch('http://api.geonames.org/searchJSON?name=' + arg + '&featureClass=A&orderby=population&maxRows=1&username=weknowit', {signal: signal })
+        .then((response) => response.json())
+          .then((res) => {
+            setIsLoading(false)
+			// Handle illegal cases and limited search to letters only            
+			if (res.totalResultsCount > 0 && arg != ''  && arg.match(/^([a-zA-Z\u0080-\u024F]+(?:. |-| |'))*[a-zA-Z\u0080-\u024F]*$/)) {
+                fetchAPI(res.geonames[0].countryCode)
+            } 
+			else if(arg == ''){
+				setIsLoading(false)
+				setErrorMsg('Please enter a country !')
+			}
+			else if(!(arg.match(/^([a-zA-Z\u0080-\u024F]+(?:. |-| |'))*[a-zA-Z\u0080-\u024F]*$/))) {
+				setIsLoading(false)
+				setErrorMsg('Only letters allowed !')
+			}
+			else {
+                setErrorMsg('Error fetching country code API !')
+                setTimeout(() => 2000);
+              }
+          })
+          .catch((err) => setFetchError(err))
+      }
+
+	// handles press button to allow it to call fetchByCountryCode and using its result for fetchAPI
+	// avoid for example if we type "bingo" to have different country codes such as US, SS, BF and so to have different countries
+	// so it allows to fetch the country code with a unique country with the same country code
+	const pressButton = async (arg: string) => {
+		await fetchByCountryCode(arg)
+	}
+
+	
 	// render error message
 	function renderError () {
 		if(errorMsg){
@@ -80,10 +120,10 @@ export const SearchByCountry = () => {
 		if(isLoading){
 			return(
 				<View>
-					<Text style={styles.loadingText}>
-						{'Loading...'}
-					</Text>
+					<ActivityIndicator size='large' color='green' ></ActivityIndicator>
+					<Text style={styles.loadingText}>{'Loading...'}</Text>
 				</View>
+				
 			)
 		}
 	}
@@ -118,7 +158,7 @@ export const SearchByCountry = () => {
 					{renderError()}
 					
 					<View style={styles.searchIcon}>
-						<Icon  name="search1" size={50} color={"#50aab5"} onPress={() => fetchAPI(value)}></Icon>
+						<Icon  name="search1" size={50} color={"#50aab5"} onPress={() => pressButton(value)}></Icon>
 					</View>
 
 					{renderLoading()}
