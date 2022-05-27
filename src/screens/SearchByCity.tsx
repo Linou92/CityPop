@@ -10,23 +10,87 @@ import { useNavigation } from "@react-navigation/native"
 export const SearchByCity = () => {
 
 	// logic and API call
-	//const[load, setLoad] = useState(false) // setting the loading
-	const [error, setError] = useState({}) // setting error message
+	const navigation = useNavigation()
+
+	const [errorMsg, setErrorMsg] = useState('') // setting error messages
 	const [value, onChangeText] = useState("") // setting the input value
+	const [isLoading, setIsLoading] = useState(false) // setting the loading
+	const [fetchError, setFetchError] = useState(null) // setting the fetch API error
+
+	// cancel fetch request calls and cleanup
+	const abortController = new AbortController()
+	const signal = abortController.signal 
 
 
+	// fetch the API with user input
 	function fetchAPI (arg: string) {
+		setTimeout(() => abortController.abort(), 2000)
+		setIsLoading(true)
 		fetch("http://api.geonames.org/searchJSON?name=" + arg + "&featureClass=P&maxRows=1&username=weknowit")
 			.then(response => response.json())
 			.then(res => {
-				console.log(res)
-				navigation.navigate("PopulationResult", {data: res.geonames[0]})
+				setIsLoading(false)
+				setFetchError(null)
+				// Handle illegal cases and limited search to letters only
+				if(res.totalResultsCount > 0 && arg != '' && arg.match(/^([a-zA-Z\u0080-\u024F]+(?:. |-| |'))*[a-zA-Z\u0080-\u024F]*$/)){
+					navigation.navigate("PopulationResult", {data: res.geonames[0]})
+				}
+				else if(arg == ''){
+					setIsLoading(false)
+					setErrorMsg('Please enter a city !')
+				}
+				else{
+					setIsLoading(false)
+					setErrorMsg('Only letters allowed !')
+				}
 			})
-			.catch(err => setError(err))
+			.catch(err => {
+				setIsLoading(false)
+				setFetchError(err)
+			})
+			.finally(() => setIsLoading(false))
+	}
+
+	// render error messages
+	function renderError () {
+		if(errorMsg){
+			return(
+				<View>
+					<Text style={styles.errorText}>
+						{errorMsg}
+					</Text>
+				</View>
+			)
+		}
+	}
+
+	// render fetch API error message
+	function renderFetchError () {
+		if(fetchError){
+			return(
+				<View>
+					<Text style={styles.errorText}>
+						{fetchError}
+					</Text>
+				</View>
+			)
+		}
+	}
+
+	// render loading message
+	function renderLoading () {
+		if(isLoading){
+			return(
+				<View>
+					<Text style={styles.loadingText}>
+						{'Loading...'}
+					</Text>
+				</View>
+			)
+		}
 	}
 
 	// design of the page
-	const navigation = useNavigation()
 	return (
 		<View style={styles.container}>
             
@@ -51,9 +115,15 @@ export const SearchByCity = () => {
 							value = {value}
 						></TextInput>
 					</View>
+
+					{renderFetchError()}
+					{renderError()}
+
 					<View style={styles.searchIcon}>
 						<Icon  name="search1" size={50} color={"#50aab5"} onPress={() => fetchAPI(value)}></Icon>
 					</View>
+
+					{renderLoading()}
                     
 				</View>
 			</View>
@@ -139,6 +209,18 @@ const styles = StyleSheet.create({
 
 	searchIcon: {
 		marginTop: 40,
+	},
+
+	errorText: {
+		fontSize: 20,
+		alignSelf: 'center',
+		color: 'red'
+	},
+
+	loadingText: {
+		fontSize: 20,
+		alignSelf: 'center',
+		color: 'green'
 	},
 
 	footer: {
