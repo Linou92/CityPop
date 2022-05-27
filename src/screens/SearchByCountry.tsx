@@ -20,11 +20,11 @@ export const SearchByCountry = () => {
 	const abortController = new AbortController()
 	const signal = abortController.signal
 
-	// fetch the API with user input
+	// fetch the API with country code from user input
 	function fetchAPI (arg: string) {
 		setTimeout(() => abortController.abort(), 2000)
 		setIsLoading(true)
-		fetch("http://api.geonames.org/searchJSON?country=%27%20"+ arg +"%20%27&featureClass=P&orderby=population&maxRows=3&username=weknowit", {signal: signal })
+		fetch("http://api.geonames.org/searchJSON?country="+ arg +"&featureClass=P&orderby=population&maxRows=3&username=weknowit", {signal: signal })
 			.then(response => response.json())
 			.then(res => {
 				setIsLoading(false)
@@ -64,6 +64,7 @@ export const SearchByCountry = () => {
 			// Handle illegal cases and limited search to letters only            
 			if (res.totalResultsCount > 0 && arg != ''  && arg.match(/^([a-zA-Z\u0080-\u024F]+(?:. |-| |'))*[a-zA-Z\u0080-\u024F]*$/)) {
                 fetchAPI(res.geonames[0].countryCode)
+				console.log(res.geonames[0].countryCode)
             } 
 			else if(arg == ''){
 				setIsLoading(false)
