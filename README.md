@@ -4,13 +4,10 @@ CityPop is a mobile application where the user can search for how many inhabitan
 
 ## Usage Example
 
-<img src="Screenshots/homepage.jpg" width="200"> <img src="Screenshots/searchbycity.jpg" width="200"> 
-<img src="Screenshots/searchbycountry.jpg" width="200">
+<img src="Screenshots/homepage.jpg" width="200"> <img src="Screenshots/searchbycity.jpg" width="200"> <img src="Screenshots/searchbycountry.jpg" width="200">
 <img src="Screenshots/topcities.jpg" width="200">
 <img src="Screenshots/citypop.jpg" width="200">
 <img src="Screenshots/countrypop.jpg" width="200">
-<img src="Screenshots/error1.jpg" width="200">
-<img src="Screenshots/error2.jpg" width="200">
 
 ## Used technologies
 
@@ -20,7 +17,7 @@ CityPop is a mobile application where the user can search for how many inhabitan
    - Expo version 45.0.0
 - For testing: 
    - ESLint version 8.16.0
-   - Jest version 26.6.3
+   - Jest version 27.5.1
    - Flow version 0.178.1
 - For creating the app: 
    - React version 17.0.2
@@ -40,10 +37,6 @@ CityPop is a mobile application where the user can search for how many inhabitan
 - Run npm start
 - Open ExpoGo and scan the QR code or go to the given link
 - Enjoy !
-
-## Video Demo
-
-https://user-images.githubusercontent.com/23634325/170703649-2e5db2ea-b688-478d-9d71-4fc552dc3a05.mp4
 
 ## Project done by Lina Abu Hijleh
  

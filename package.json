@@ -9,14 +9,18 @@
 		"web": "expo start --web",
 		"eject": "expo eject",
 		"build": "tsc",
-		"flow": "flow"
+		"flow": "flow",
+		"test": "jest"
+	},
+	"jest": {
+		"preset": "react-native"
 	},
 	"dependencies": {
 		"@react-navigation/native": "^5.9.8",
 		"@react-navigation/stack": "^5.14.9",
 		"@types/jest": "^27.5.1",
 		"@types/react-native-vector-icons": "^6.4.10",
-		"@types/react-test-renderer": "^18.0.0",
+		"@types/react-test-renderer": "17.0.2",
 		"axios": "^0.27.2",
 		"expo": "~45.0.0",
 		"expo-status-bar": "~1.3.0",
@@ -27,6 +31,7 @@
 		"react-native": "0.68.2",
 		"react-native-elements": "^3.4.2",
 		"react-native-gesture-handler": "~2.2.1",
+		"react-native-safe-area-context": "^3.4.1",
 		"react-native-screens": "~3.11.1",
 		"react-native-vector-icons": "^9.1.0",
 		"react-native-web": "0.17.7",
@@ -40,8 +45,13 @@
 		"@types/react-native": "^0.66.18",
 		"@typescript-eslint/eslint-plugin": "^5.25.0",
 		"@typescript-eslint/parser": "^5.25.0",
+		"babel-jest": "^28.1.0",
+		"babel-preset-react-native": "^4.0.1",
 		"eslint": "^8.16.0",
 		"flow-bin": "^0.178.1",
+		"jest": "27.5.1",
+		"jest-react-native": "^18.0.0",
+		"react-test-renderer": "17.0.2",
 		"typescript": "~4.3.5"
 	},
 	"private": true
